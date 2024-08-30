@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Stage, Layer, Line, Group } from 'react-konva';
-import Token from './token';
+import Token from './Token';
 import Toolbar from './toolbar';
 import useYjs from '../hooks/useYjs';
 import useZoom from '../hooks/useZoom';
