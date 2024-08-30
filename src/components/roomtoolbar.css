@@ -1,0 +1,52 @@
+.room-toolbar {
+    background-color: white;
+    border-radius: 6px;
+    padding: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .room-id-form {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .room-id-input {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 120px;
+    height: 30px; /* Adjust height */
+    margin-right: 4px;
+  }
+
+  .room-id-input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+
+  .join-button {
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 12px 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+
+  .join-button:hover {
+    background-color: #333;
+  }
+
+  .join-button:active {
+    background-color: #000;
+  }

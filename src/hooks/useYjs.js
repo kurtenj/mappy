@@ -1,38 +1,52 @@
-import { useState, useEffect } from 'react';
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
-import { getRandomColor } from '../utils/tokenUtils';
+import { useEffect, useState, useCallback } from 'react';
 
-const useYjs = () => {
+const useYjs = (initialRoomId = 'default-room') => {
   const [tokens, setTokens] = useState([]);
   const [doc, setDoc] = useState(null);
+  const [roomId, setRoomId] = useState(initialRoomId);
+  const [provider, setProvider] = useState(null);
 
   useEffect(() => {
     const ydoc = new Y.Doc();
-    const provider = new WebsocketProvider('ws://localhost:3002', 'virtual-tabletop', ydoc);
+    const wsProvider = new WebsocketProvider('ws://localhost:1234', roomId, ydoc);
     const yTokens = ydoc.getArray('tokens');
 
-    setDoc(ydoc);
+    const updateTokens = () => {
+      setTokens(yTokens.toArray().map(token => ({
+        ...token,
+        rotation: token.rotation || 0,
+        scaleX: token.scaleX || 1,
+        scaleY: token.scaleY || 1
+      })));
+    };
 
-    yTokens.observe(event => {
-      setTokens(yTokens.toArray());
-    });
+    yTokens.observe(updateTokens);
+    updateTokens();
+
+    setDoc(ydoc);
+    setProvider(wsProvider);
 
     return () => {
-      provider.disconnect();
+      wsProvider.disconnect();
+      ydoc.destroy();
     };
-  }, []);
+  }, [roomId]);
 
-  const addToken = () => {
+  const addToken = useCallback((token) => {
     if (doc) {
       const yTokens = doc.getArray('tokens');
-      const x = Math.random() * 500; // Adjust based on your board size
-      const y = Math.random() * 500; // Adjust based on your board size
-      yTokens.push([{ id: Date.now(), x, y, color: getRandomColor() }]);
+      yTokens.push([{
+        ...token,
+        rotation: 0,
+        scaleX: 1,
+        scaleY: 1
+      }]);
     }
-  };
+  }, [doc]);
 
-  return { tokens, doc, addToken };
+  return { tokens, addToken, setRoomId, roomId, doc };
 };
 
 export default useYjs;

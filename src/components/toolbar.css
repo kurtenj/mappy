@@ -1,27 +1,17 @@
 .toolbar {
-    position: fixed;
-    z-index: 10;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    gap: 4px;
-  }
-  
-  .primary-toolbar {
-    top: 10px;
-    left: 10px;
-  }
-  
-  .zoom-toolbar {
-    top: 10px;
-    right: 10px;
-    display: flex;
     align-items: center;
-  }
-  
-  .toolbar-button {
+}
+
+.primary-toolbar .zoom-toolbar {
+    flex-direction: row;
+}
+
+.toolbar-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -36,19 +26,19 @@
     justify-content: center;
     border-radius: 4px;
     transition: background-color 0.2s ease, color 0.2s ease;
-  }
-  
-  .toolbar-button:hover {
+}
+
+.toolbar-button:hover {
     background-color: rgba(0, 0, 0, 0.05);
     color: #000;
-  }
-  
-  .toolbar-button:active {
+}
+
+.toolbar-button:active {
     background-color: rgba(0, 0, 0, 0.1);
-  }
-  
-  .zoom-level {
+}
+
+.zoom-level {
     margin: 0 8px;
     font-size: 14px;
     font-weight: bold;
-  }
+}

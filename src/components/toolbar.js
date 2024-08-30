@@ -3,16 +3,21 @@ import { MousePointer2, UserPlus2, ZoomIn, ZoomOut, Maximize } from 'lucide-reac
 import './toolbar.css';
 
 const Toolbar = ({ addToken, handleZoom, zoom }) => {
-  return (
-    <>
+  if (addToken) {
+    return (
       <div className="toolbar primary-toolbar">
         <button className="toolbar-button">
           <MousePointer2 />
         </button>
-        <button className="toolbar-button" onClick={() => addToken()}>
+        <button className="toolbar-button" onClick={() => addToken('circle')}>
           <UserPlus2 />
         </button>
       </div>
+    );
+  }
+
+  if (handleZoom) {
+    return (
       <div className="toolbar zoom-toolbar">
         <button className="toolbar-button" onClick={() => handleZoom('out')}>
           <ZoomOut />
@@ -25,8 +30,10 @@ const Toolbar = ({ addToken, handleZoom, zoom }) => {
           <Maximize />
         </button>
       </div>
-    </>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default Toolbar;
