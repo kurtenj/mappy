@@ -5,6 +5,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
+    height: 48px;
     box-sizing: border-box;
   }
   
@@ -29,12 +30,12 @@
     border-color: #007bff;
   }
 
-  .join-button {
+  .join-button, .refresh-button {
     background-color: black;
     color: white;
     border: none;
     cursor: pointer;
-    padding: 12px 20px;
+    padding: 12px 16px;
     font-size: 14px;
     display: flex;
     align-items: center;
@@ -43,10 +44,46 @@
     transition: background-color 0.2s ease;
   }
 
-  .join-button:hover {
+  .join-button {
+    margin-right: 4px;
+  }
+
+  .join-button:hover, .refresh-button:hover {
     background-color: #333;
   }
 
-  .join-button:active {
+  .join-button:active, .refresh-button:active {
     background-color: #000;
+  }
+
+  .host-room-id {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  .host-room-id .refresh-button {
+    margin-left: 8px;
+  }
+
+  /* Ensure the toolbar-button style is consistent with other buttons */
+  .toolbar-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+
+  .toolbar-button:hover {
+    background-color: #f0f0f0;
   }

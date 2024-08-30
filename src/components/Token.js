@@ -5,7 +5,6 @@ const Token = ({ id, type, x, y, color, gridSize, doc, isSelected, onSelect, rot
   const shapeRef = useRef();
   const trRef = useRef();
   const [isDragging, setIsDragging] = useState(false);
-  const [isMouseDown, setIsMouseDown] = useState(false);
   const size = gridSize * 0.8;
 
   useEffect(() => {
@@ -15,29 +14,25 @@ const Token = ({ id, type, x, y, color, gridSize, doc, isSelected, onSelect, rot
     }
   }, [isSelected]);
 
-  const handleMouseDown = () => {
-    setIsMouseDown(true);
-  };
-
-  const handleMouseUp = () => {
-    if (isMouseDown && !isDragging) {
-      onSelect(id);
-    }
-    setIsMouseDown(false);
-  };
-
   const handleDragStart = () => {
     setIsDragging(true);
+    onSelect(id);
   };
 
   const handleDragEnd = (e) => {
     setIsDragging(false);
-    updateTokenInDoc(e.target.x(), e.target.y());
+    const newX = Math.round(e.target.x() / gridSize) * gridSize;
+    const newY = Math.round(e.target.y() / gridSize) * gridSize;
+    updateTokenInDoc(newX, newY);
+    e.target.position({ x: newX, y: newY });
   };
 
   const handleTransform = () => {
     const node = shapeRef.current;
-    updateTokenInDoc(node.x(), node.y(), node.rotation(), node.scaleX(), node.scaleY());
+    const scaleX = node.scaleX();
+    const scaleY = node.scaleY();
+    const rotation = node.rotation();
+    updateTokenInDoc(node.x(), node.y(), rotation, scaleX, scaleY);
   };
 
   const updateTokenInDoc = (newX, newY, newRotation = rotation, newScaleX = scaleX, newScaleY = scaleY) => {
@@ -61,16 +56,16 @@ const Token = ({ id, type, x, y, color, gridSize, doc, isSelected, onSelect, rot
     height: size,
     fill: color,
     rotation,
-    scaleX: isDragging ? scaleX * 1.1 : scaleX,
-    scaleY: isDragging ? scaleY * 1.1 : scaleY,
+    scaleX,
+    scaleY,
     shadowColor: 'black',
     shadowBlur: isDragging ? 10 : 0,
     shadowOpacity: isDragging ? 0.6 : 0,
     shadowOffsetX: isDragging ? 5 : 0,
     shadowOffsetY: isDragging ? 5 : 0,
     draggable: true,
-    onMouseDown: handleMouseDown,
-    onMouseUp: handleMouseUp,
+    onClick: () => onSelect(id),
+    onTap: () => onSelect(id),
     onDragStart: handleDragStart,
     onDragEnd: handleDragEnd,
     onTransformEnd: handleTransform,

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Stage, Layer, Line, Group } from 'react-konva';
+import { Stage, Layer, Group, Line } from 'react-konva';
 import Token from './Token';
 import ToolbarContainer from './ToolbarContainer';
 import useYjs from '../hooks/useYjs';
@@ -17,7 +17,7 @@ const Board = () => {
   const [stageSize, setStageSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [selectedId, selectShape] = useState(null);
 
-  const { tokens, addToken, setRoomId, roomId, doc } = useYjs();
+  const { tokens, addToken, setRoomId, roomId, isHost, doc } = useYjs();
   const { zoom, handleZoom } = useZoom();
 
   useEffect(() => {
@@ -35,6 +35,9 @@ const Board = () => {
       x: Math.floor(Math.random() * (VISIBLE_WIDTH - GRID_SIZE) / GRID_SIZE) * GRID_SIZE,
       y: Math.floor(Math.random() * (VISIBLE_HEIGHT - GRID_SIZE) / GRID_SIZE) * GRID_SIZE,
       color: getRandomColor(),
+      rotation: 0,
+      scaleX: 1,
+      scaleY: 1,
     };
     addToken(newToken);
   };
@@ -95,6 +98,7 @@ const Board = () => {
         zoom={zoom}
         onRoomChange={setRoomId}
         currentRoomId={roomId}
+        isHost={isHost}
       />
       <Stage
         width={stageSize.width}
