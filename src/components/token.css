@@ -1,0 +1,10 @@
+.token {
+    border-radius: 50%;
+    position: absolute;
+    cursor: move;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .token.dragging {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
